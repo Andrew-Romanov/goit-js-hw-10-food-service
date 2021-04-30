@@ -6,6 +6,8 @@ const Theme = {
   DARK: 'dark-theme',
 };
 
+const THEME_STORAGE_KEY = 'theme';
+
 const bodyElement = document.querySelector('body');
 const themeSwitchElement = document.querySelector('#theme-switch-toggle');
 
@@ -14,12 +16,12 @@ themeSwitchElement.addEventListener('change', changeTheme);
 function changeTheme() {
   // Сбрасываю настройки, если в процессе работы
   // с сайтом пользователь стёр Local Storage
-  if (localStorage.getItem('theme') === null) {
+  if (localStorage.getItem(THEME_STORAGE_KEY) === null) {
     resetTheme();
     return;
   };
 
-  switch (localStorage.getItem('theme')) {
+  switch (localStorage.getItem(THEME_STORAGE_KEY)) {
     case Theme.LIGHT:
       setTheme(Theme.DARK);
       break;
@@ -37,12 +39,12 @@ function setTheme(newTheme) {
       // т. е. менять нечего
       bodyElement.classList.remove(Theme.DARK);
       bodyElement.classList.add(Theme.LIGHT);
-      localStorage.setItem('theme', Theme.LIGHT);
+      localStorage.setItem(THEME_STORAGE_KEY, Theme.LIGHT);
       break;
     case Theme.DARK:
       bodyElement.classList.remove(Theme.LIGHT);
       bodyElement.classList.add(Theme.DARK);
-      localStorage.setItem('theme', Theme.DARK);
+      localStorage.setItem(THEME_STORAGE_KEY, Theme.DARK);
       break;
   };
 };
@@ -53,12 +55,12 @@ function resetTheme() {
 };
 
 // Сбрасываю настройки, если Local Storage пуст
-if (localStorage.getItem('theme') === null) {
+if (localStorage.getItem(THEME_STORAGE_KEY) === null) {
   resetTheme();
 // Делаю начальные настройки, если Local Storage не пуст
 } else {
-  setTheme(localStorage.getItem('theme'));
-  switch (localStorage.getItem('theme')) {
+  setTheme(localStorage.getItem(THEME_STORAGE_KEY));
+  switch (localStorage.getItem(THEME_STORAGE_KEY)) {
   case Theme.LIGHT:
     themeSwitchElement.checked = false;
     break;
